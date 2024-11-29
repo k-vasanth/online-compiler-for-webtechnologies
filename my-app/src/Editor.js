@@ -8,7 +8,7 @@ import { Controlled as ControlledEditor } from 'react-codemirror2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
 
-export default function Editor(props) {
+ function Editor(props) {
   const {
     language,
     displayName,
@@ -48,3 +48,5 @@ export default function Editor(props) {
     </div>
   )
 }
+
+export default Editor;
