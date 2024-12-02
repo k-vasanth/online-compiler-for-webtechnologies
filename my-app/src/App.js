@@ -30,6 +30,7 @@ function App() {
           displayName="HTML"
           value={html}
           onChange={setHtml}
+          style={{ backgroundColor: 'green' }}
         />
         <Editor
           language="css"
