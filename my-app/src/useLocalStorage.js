@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react';
 
-const PREFIX = 'codepen-clone-'
-
- function useLocalStorage(key, initialValue) {
-  const prefixedKey = PREFIX + key
-
+function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => {
-    const jsonValue = localStorage.getItem(prefixedKey)
-    if (jsonValue != null) return JSON.parse(jsonValue)
-
-    if (typeof initialValue === 'function') {
-      return initialValue()
-    } else {
-      return initialValue
-    }
-  })
+    const jsonValue = localStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : initialValue;
+  });
 
   useEffect(() => {
-    localStorage.setItem(prefixedKey, JSON.stringify(value))
-  }, [prefixedKey, value])
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
 
-  return [value, setValue]
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data?.type === 'log') {
+        console.log('Iframe log:', ...event.data.args);
+      }
+    };
+  
+  
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+  
+
+  return [value, setValue];
 }
 
 export default useLocalStorage;
